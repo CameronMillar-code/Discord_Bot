@@ -67,15 +67,18 @@ async def hearthstone(msg, *, args):
         output = "Sorry sir, I could not find that card."
         await msg.send(output)
 
+# Command for MTG cards, uses the MTG API instead
 @bot.command(name='mtg', help = "Returns a Magic card when given a card name.")
 async def Magic(msg, *, args):
     try:
         search_input = args
         parse.quote(search_input)
+        # Call to the MTG API
         url = "https://api.scryfall.com/cards/search?q={search_query}".format(search_query = search_input)
         response = requests.get(url)
         response_data = response.json()
 
+        # Filter for the image URL
         image = json.dumps(response_data['data'][0]['image_uris']['png'])
 
         image = image[1:-1]
